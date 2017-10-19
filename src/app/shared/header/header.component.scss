@@ -1,0 +1,18 @@
+@import "../../../variables";
+header {
+  background-color: $c-gray;
+
+  .header-container {
+    display: flex;
+  }
+  .hd-title {
+    flex-basis: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+nav {
+
+}
