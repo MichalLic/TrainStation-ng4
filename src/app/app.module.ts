@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import {SharedModule} from './shared/shared.module';
+import {CoreModule} from './core/core.module';
 
 @NgModule({
   declarations: [
@@ -14,7 +14,7 @@ import {SharedModule} from './shared/shared.module';
     BrowserModule,
     FormsModule,
     HttpModule,
-    SharedModule
+    CoreModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
