@@ -1,0 +1,20 @@
+app-details-messages {
+  display: flex;
+}
+
+.table-hd {
+  display: flex;
+
+  span {
+    font-weight: 700;
+    font-size: 18px;
+  }
+}
+
+.table-id {
+  flex-basis: 20%;
+}
+
+.table-col {
+  flex: 1;
+}

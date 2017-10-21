@@ -1,4 +1,5 @@
 @import "../../../variables";
+
 header {
   background-color: $c-gray;
 
@@ -14,5 +15,23 @@ header {
 }
 
 nav {
+  background-color: $c-blue;
 
+  ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+
+    a {
+      color: $c-gray;
+      padding: 15px;
+      display: block;
+      text-decoration: none;
+      
+      &.active,
+      &:hover {
+        background-color: $c-blue-dark;
+      }
+    }
+  }
 }

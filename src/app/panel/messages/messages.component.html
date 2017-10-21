@@ -1,0 +1,19 @@
+<section class="messages">
+  <div class="container">
+
+    <div class="table">
+      <div class="table-hd">
+        <span class="table-id">ID</span>
+        <span class="table-col">Name</span>
+        <span class="table-col">Edit</span>
+      </div>
+      <app-details-messages
+      *ngFor="let message of messages; let i = index"
+      [detail] = message
+      [index] = i
+      ></app-details-messages>
+    </div>
+  </div>
+</section>
+
+

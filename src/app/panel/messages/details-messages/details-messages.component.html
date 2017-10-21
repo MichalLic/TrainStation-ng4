@@ -1,0 +1,25 @@
+<p class="table-id">{{index}}</p>
+<p class="table-col" *ngIf="!isEdited">{{detail.message}}</p>
+<p *ngIf="isEdited" class="table-col">
+  <input
+    type="text"
+    name="detail-message"
+    placeholder="{{detail.message}}"
+    (input)="onNameChange(name.value)"
+    #name
+  ></p>
+<p class="table-col">
+  <button
+    mat-raised-button
+    ngClass="{{!isEdited ? 'mat-primary' : ''}}"
+    (click)="onEdit()"> {{!isEdited ? 'Edit'  : 'Cancel'}}
+  </button>
+</p>
+<p *ngIf="canSave" class="table-col">
+  <button
+    mat-raised-button color="warn"
+    (click)="onSave()">Save
+  </button>
+</p>
+
+

@@ -4,21 +4,20 @@
       <img src="../../../assets/images/logo.png" alt="">
     </div>
     <div class="hd-title">
-      <h1>Welcome on Virgin Trains!</h1>
+      <h1>Welcome to Virgin Trains!</h1>
     </div>
   </div>
 </header>
 <nav>
   <div class="container nav-box">
-    <div>aaa</div>
+    <ul>
+      <li *ngFor="let link of navLinks">
+        <a
+          routerLink="/{{link.id}}"
+          routerLinkActive="active"
+        >{{link.name}}</a>
+      </li>
+    </ul>
   </div>
 </nav>
 
-<div class="button-row">
-  <button mat-raised-button>Basic</button>
-  <button mat-raised-button color="primary">Primary</button>
-  <button mat-raised-button color="accent">Accent</button>
-  <button mat-raised-button color="warn">Warn</button>
-  <button mat-raised-button disabled>Disabled</button>
-  <a mat-raised-button routerLink=".">Link</a>
-</div>
