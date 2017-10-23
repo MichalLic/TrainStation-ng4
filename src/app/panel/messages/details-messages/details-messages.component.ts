@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, OnInit} from '@angular/core';
-import {DataStorageService} from "../../../data-storage.service";
+import {DataStorageService} from '../../../data-storage.service';
 
 @Component({
   selector: 'app-details-messages',

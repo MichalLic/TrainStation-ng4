@@ -23,5 +23,8 @@ export class DataStorageService {
     return this.http.put('https://trainstation-720e3.firebaseio.com/hello/' + id + '.json', object);
   }
 
+  addMessages(id, object) {
+    return this.http.post('https://trainstation-720e3.firebaseio.com/hello/' + id + '.json', object);
+  }
 
 }
