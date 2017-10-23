@@ -1,7 +1,6 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {DataStorageService} from '../../data-storage.service';
 import {Subscription} from 'rxjs/Subscription';
-
 
 @Component({
   selector: 'app-messages',
@@ -10,11 +9,13 @@ import {Subscription} from 'rxjs/Subscription';
 })
 
 export class MessagesComponent implements OnInit, OnDestroy {
+  @ViewChild('idAdd') idAdd;
+  @ViewChild('messageAdd') messageAdd;
   messagesSubscription: Subscription;
   messages: any;
-  addddd = {
-    message: 'bbbb'
-  };
+  messageObject;
+  newMessage: string;
+  newId: number;
 
 
   constructor(private dataStorageService: DataStorageService) {
@@ -27,8 +28,6 @@ export class MessagesComponent implements OnInit, OnDestroy {
         this.messages = data;
         console.log(this.messages);
       });
-
-
   }
 
   ngOnDestroy() {
@@ -36,11 +35,23 @@ export class MessagesComponent implements OnInit, OnDestroy {
   }
 
   onAdd() {
-    this.messages.push(this.addddd);
-    this.dataStorageService.addMessages(4, this.addddd)
+    this.getFieldsValues();
+    this.messages.push(this.messageObject);
+    this.dataStorageService.addMessages(this.newId, this.messageObject)
       .subscribe(
         (response) => console.log(response),
         (error) => console.log(error),
       );
   };
+
+
+  getFieldsValues() {
+    this.newId = this.messages.length;
+    this.newMessage = this.messageAdd.nativeElement.value;
+    this.messageObject = {
+      message: this.newMessage,
+      id: this.newId,
+    };
+  }
+
 }

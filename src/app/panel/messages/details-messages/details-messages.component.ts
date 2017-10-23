@@ -47,7 +47,7 @@ export class DetailsMessagesComponent implements OnInit, OnChanges {
         (error) => console.log(error)
       );
     this.isEdited = !this.isEdited;
-    this.canSave = !this.canSave
+    this.canSave = !this.canSave;
     console.log(this.detail);
     console.log(this.index);
   }
