@@ -5,7 +5,8 @@
         <button mat-button
                 color="primary"
                 (click)="onAdd()"
-        >Add new message</button>
+        >Add new message
+        </button>
         <div class="example-container">
           <mat-form-field>
             <input matInput
@@ -30,6 +31,7 @@
         *ngFor="let message of messages; let i = index"
         [detail]=message
         [index]=i
+        [messages]=messages
       ></app-details-messages>
     </div>
   </div>

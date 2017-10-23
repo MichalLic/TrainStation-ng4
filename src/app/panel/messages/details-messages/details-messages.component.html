@@ -1,13 +1,6 @@
-<span class="table-id">{{index}}</span>
+<span class="table-id">{{detail.id}}</span>
 <span class="table-col" *ngIf="!isEdited">{{detail.message}}</span>
 <span *ngIf="isEdited" class="table-col table-input">
-  <!--<input-->
-    <!--type="text"-->
-    <!--name="detail-message"-->
-    <!--placeholder="{{detail.message}}"-->
-    <!--(input)="onNameChange(name.value)"-->
-    <!--#name-->
-  <!--&gt;-->
   <form class="example-form">
     <mat-form-field class="example-full-width">
       <input matInput
@@ -25,8 +18,12 @@
     (click)="onEdit()"> {{!isEdited ? 'Edit' : 'Cancel'}}
   </button>
   <button *ngIf="canSave"
-          mat-raised-button color="warn"
+          mat-raised-button color="primary"
           (click)="onSave()">Save
+  </button>
+   <button *ngIf="canSave"
+           mat-raised-button color="warn"
+           (click)="onRemove()">Remove
   </button>
 </span>
 

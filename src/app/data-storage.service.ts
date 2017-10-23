@@ -24,9 +24,14 @@ export class DataStorageService {
     return this.http.put('https://trainstation-720e3.firebaseio.com/hello/' + id + '.json', object, {headers: headers});
   }
 
-  addMessages(id, object) {
+  addMessage(id, object) {
     const headers = new Headers({'Content-Type': 'application/json'});
     return this.http.put('https://trainstation-720e3.firebaseio.com/hello/' + id + '.json', object, {headers: headers});
+  }
+
+  removeMessage(id) {
+    const headers = new Headers({'Content-Type': 'application/json'});
+    return this.http.delete('https://trainstation-720e3.firebaseio.com/hello/' + id + '.json', {headers: headers});
   }
 
 }

@@ -11,7 +11,8 @@ import {Subscription} from 'rxjs/Subscription';
 export class MessagesComponent implements OnInit, OnDestroy {
   @ViewChild('idAdd') idAdd;
   @ViewChild('messageAdd') messageAdd;
-  messagesSubscription: Subscription;
+  messagesGetSubscription: Subscription;
+  messagesAddSubscription: Subscription;
   messages: any;
   messageObject;
   newMessage: string;
@@ -22,28 +23,29 @@ export class MessagesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.messagesSubscription = this.dataStorageService.getMessages()
+    this.messagesGetSubscription = this.dataStorageService.getMessages()
       .subscribe(data => {
         console.log(data);
         this.messages = data;
         console.log(this.messages);
       });
+
   }
 
   ngOnDestroy() {
-    this.messagesSubscription.unsubscribe();
+    this.messagesGetSubscription.unsubscribe();
+    this.messagesAddSubscription.unsubscribe();
   }
 
   onAdd() {
     this.getFieldsValues();
     this.messages.push(this.messageObject);
-    this.dataStorageService.addMessages(this.newId, this.messageObject)
+    this.messagesAddSubscription = this.dataStorageService.addMessage(this.newId, this.messageObject)
       .subscribe(
         (response) => console.log(response),
         (error) => console.log(error),
       );
   };
-
 
   getFieldsValues() {
     this.newId = this.messages.length;

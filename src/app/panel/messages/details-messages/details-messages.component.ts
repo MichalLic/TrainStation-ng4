@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {DataStorageService} from '../../../data-storage.service';
 
 @Component({
@@ -6,9 +6,10 @@ import {DataStorageService} from '../../../data-storage.service';
   templateUrl: './details-messages.component.html',
   styleUrls: ['./details-messages.component.scss']
 })
-export class DetailsMessagesComponent implements OnInit, OnChanges {
+export class DetailsMessagesComponent implements OnInit, OnDestroy {
   @Input() detail;
   @Input() index;
+  @Input() messages;
   isEdited: boolean = false;
   canSave: boolean = false;
 
@@ -19,7 +20,7 @@ export class DetailsMessagesComponent implements OnInit, OnChanges {
     console.log(this.detail);
   }
 
-  ngOnChanges(changes) {
+  ngOnDestroy() {
   }
 
   onNameChange(value) {
@@ -29,19 +30,16 @@ export class DetailsMessagesComponent implements OnInit, OnChanges {
 
   onEdit() {
     this.isEdited = !this.isEdited;
-    console.log(this.isEdited);
-
 
     if (this.isEdited === true) {
       this.canSave = !this.canSave;
     } else {
       this.canSave = false;
     }
-
   }
 
   onSave() {
-    this.dataStorageService.editMessages(this.index, this.detail)
+  this.dataStorageService.editMessages(this.index, this.detail)
       .subscribe(
         (response) => console.log(response),
         (error) => console.log(error)
@@ -51,4 +49,15 @@ export class DetailsMessagesComponent implements OnInit, OnChanges {
     console.log(this.detail);
     console.log(this.index);
   }
+
+  onRemove() {
+    console.log(this.index);
+    this.messages.splice(this.index, 1);
+    this.dataStorageService.removeMessage(this.detail.id)
+      .subscribe(
+        (response) => console.log(response),
+        (error) => console.log(error)
+      );
+  }
 }
+
