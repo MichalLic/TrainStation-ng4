@@ -13,10 +13,12 @@ export class MessagesComponent implements OnInit, OnDestroy {
   @ViewChild('messageAdd') messageAdd;
   messagesGetSubscription: Subscription;
   messagesAddSubscription: Subscription;
+  canAdd: boolean = false;
   messages: any;
   messageObject;
   newMessage: string;
   newId: number;
+  aa;
 
 
   constructor(private dataStorageService: DataStorageService) {
@@ -25,7 +27,6 @@ export class MessagesComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.messagesGetSubscription = this.dataStorageService.getMessages()
       .subscribe(data => {
-        console.log(data);
         this.messages = data;
         console.log(this.messages);
       });
@@ -37,6 +38,10 @@ export class MessagesComponent implements OnInit, OnDestroy {
     this.messagesAddSubscription.unsubscribe();
   }
 
+  addInit() {
+    this.canAdd = !this.canAdd;
+  }
+
   onAdd() {
     this.getFieldsValues();
     this.messages.push(this.messageObject);
@@ -45,15 +50,15 @@ export class MessagesComponent implements OnInit, OnDestroy {
         (response) => console.log(response),
         (error) => console.log(error),
       );
+    this.addInit();
   };
 
   getFieldsValues() {
-    this.newId = this.messages.length;
+    this.newId = +[this.idAdd.nativeElement.value];
     this.newMessage = this.messageAdd.nativeElement.value;
     this.messageObject = {
       message: this.newMessage,
       id: this.newId,
     };
   }
-
 }

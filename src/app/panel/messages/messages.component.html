@@ -1,23 +1,35 @@
 <section class="messages">
   <div class="container">
     <div class="table">
-      <div class="table-add">
+      <div class="table-option">
         <button mat-button
                 color="primary"
-                (click)="onAdd()"
+                (click)="addInit()"
         >Add new message
         </button>
+      </div>
+      <div class="table-add"
+           *ngIf="canAdd">
         <div class="example-container">
+          <button mat-button
+                  color="primary"
+                  (click)="onAdd()"
+          >Save message
+          </button>
           <mat-form-field>
             <input matInput
                    placeholder="ID"
                    #idAdd
+                   required
+                   type="number"
             >
           </mat-form-field>
           <mat-form-field>
             <input matInput
                    placeholder="Message"
                    #messageAdd
+                   required
+                   type="text"
             >
           </mat-form-field>
         </div>

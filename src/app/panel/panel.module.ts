@@ -4,6 +4,7 @@ import {StationsComponent} from './stations/stations.component';
 import {CoreModule} from '../core/core.module';
 import {CommonModule} from '@angular/common';
 import {DetailsMessagesComponent} from './messages/details-messages/details-messages.component';
+import {FormsModule} from '@angular/forms';
 @NgModule({
   declarations: [
     MessagesComponent,
@@ -12,7 +13,8 @@ import {DetailsMessagesComponent} from './messages/details-messages/details-mess
   ],
   imports: [
     CommonModule,
-    CoreModule
+    CoreModule,
+    FormsModule,
   ],
   exports: [
     DetailsMessagesComponent

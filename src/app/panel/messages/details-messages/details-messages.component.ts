@@ -25,7 +25,6 @@ export class DetailsMessagesComponent implements OnInit, OnDestroy {
 
   onNameChange(value) {
     this.detail.message = value;
-    console.log(this.detail);
   }
 
   onEdit() {
@@ -39,15 +38,13 @@ export class DetailsMessagesComponent implements OnInit, OnDestroy {
   }
 
   onSave() {
-  this.dataStorageService.editMessages(this.index, this.detail)
+  this.dataStorageService.editMessages(this.detail.id, this.detail)
       .subscribe(
         (response) => console.log(response),
         (error) => console.log(error)
       );
     this.isEdited = !this.isEdited;
     this.canSave = !this.canSave;
-    console.log(this.detail);
-    console.log(this.index);
   }
 
   onRemove() {
