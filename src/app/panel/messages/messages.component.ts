@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {DataStorageService} from '../../data-storage.service';
 import {Subscription} from 'rxjs/Subscription';
+import {Message} from '../../message';
 
 @Component({
   selector: 'app-messages',
@@ -14,11 +15,10 @@ export class MessagesComponent implements OnInit, OnDestroy {
   messagesGetSubscription: Subscription;
   messagesAddSubscription: Subscription;
   canAdd: boolean = false;
-  messages: any;
-  messageObject;
+  messages: Message[];
+  messageObject: Message;
   newMessage: string;
   newId: number;
-  aa;
 
 
   constructor(private dataStorageService: DataStorageService) {

@@ -1,5 +1,6 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {DataStorageService} from '../../../data-storage.service';
+import {Message} from '../../../message';
 
 @Component({
   selector: 'app-details-messages',
@@ -7,9 +8,9 @@ import {DataStorageService} from '../../../data-storage.service';
   styleUrls: ['./details-messages.component.scss']
 })
 export class DetailsMessagesComponent implements OnInit, OnDestroy {
-  @Input() detail;
+  @Input() detail: Message;
   @Input() index;
-  @Input() messages;
+  @Input() messages: Message[];
   isEdited: boolean = false;
   canSave: boolean = false;
 
@@ -17,7 +18,6 @@ export class DetailsMessagesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log(this.detail);
   }
 
   ngOnDestroy() {
@@ -48,7 +48,6 @@ export class DetailsMessagesComponent implements OnInit, OnDestroy {
   }
 
   onRemove() {
-    console.log(this.index);
     this.messages.splice(this.index, 1);
     this.dataStorageService.removeMessage(this.detail.id)
       .subscribe(
