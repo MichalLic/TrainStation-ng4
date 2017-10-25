@@ -7,7 +7,7 @@ import {Message} from '../../../message';
   templateUrl: './details-messages.component.html',
   styleUrls: ['./details-messages.component.scss']
 })
-export class DetailsMessagesComponent implements OnInit, OnDestroy {
+export class DetailsMessagesComponent implements OnInit {
   @Input() detail: Message;
   @Input() index;
   @Input() messages: Message[];
@@ -18,9 +18,6 @@ export class DetailsMessagesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-  }
-
-  ngOnDestroy() {
   }
 
   onNameChange(value) {
@@ -38,7 +35,7 @@ export class DetailsMessagesComponent implements OnInit, OnDestroy {
   }
 
   onSave() {
-  this.dataStorageService.editMessages(this.detail.id, this.detail)
+    this.dataStorageService.editMessages(this.index, this.detail)
       .subscribe(
         (response) => console.log(response),
         (error) => console.log(error)
@@ -49,7 +46,8 @@ export class DetailsMessagesComponent implements OnInit, OnDestroy {
 
   onRemove() {
     this.messages.splice(this.index, 1);
-    this.dataStorageService.removeMessage(this.detail.id)
+    console.log(this.messages);
+    this.dataStorageService.removeMessage(this.messages)
       .subscribe(
         (response) => console.log(response),
         (error) => console.log(error)

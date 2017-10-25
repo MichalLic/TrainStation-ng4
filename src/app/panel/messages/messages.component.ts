@@ -45,7 +45,7 @@ export class MessagesComponent implements OnInit, OnDestroy {
   onAdd() {
     this.getFieldsValues();
     this.messages.push(this.messageObject);
-    this.messagesAddSubscription = this.dataStorageService.addMessage(this.newId, this.messageObject)
+    this.messagesAddSubscription = this.dataStorageService.addMessage(this.messages)
       .subscribe(
         (response) => console.log(response),
         (error) => console.log(error),
