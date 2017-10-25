@@ -8,7 +8,12 @@ app-details-messages {
 
 .table-add {
   padding: 40px 0;
-  display: flex;
+  form {
+    display: flex;
+  }
+  .input-box {
+    padding: 0 10px;
+  }
 }
 
 .table-hd {

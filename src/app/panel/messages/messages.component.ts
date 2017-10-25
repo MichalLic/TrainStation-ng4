@@ -19,6 +19,7 @@ export class MessagesComponent implements OnInit, OnDestroy {
   messageObject: Message;
   newMessage: string;
   newId: number;
+  @ViewChild('f') f;
 
 
   constructor(private dataStorageService: DataStorageService) {
@@ -43,19 +44,19 @@ export class MessagesComponent implements OnInit, OnDestroy {
   }
 
   onAdd() {
-    this.getFieldsValues();
-    this.messages.push(this.messageObject);
-    this.messagesAddSubscription = this.dataStorageService.addMessage(this.messages)
-      .subscribe(
-        (response) => console.log(response),
-        (error) => console.log(error),
-      );
-    this.addInit();
-  };
+    if (this.f.valid) {
+      this.getFieldsValues();
+      this.messages.push(this.messageObject);
+      this.messagesAddSubscription = this.dataStorageService.addMessage(this.messages)
+        .subscribe(
+          (response) => console.log(response),
+          (error) => console.log(error),
+        );
+      this.addInit();
+    }
+  }
 
   getFieldsValues() {
-    this.newId = +[this.idAdd.nativeElement.value];
-    this.newMessage = this.messageAdd.nativeElement.value;
     this.messageObject = {
       message: this.newMessage,
       id: this.newId,
