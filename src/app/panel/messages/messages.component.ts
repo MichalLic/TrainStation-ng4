@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {DataStorageService} from '../../data-storage.service';
 import {Subscription} from 'rxjs/Subscription';
 import {Message} from '../../message';
@@ -10,8 +10,8 @@ import {Message} from '../../message';
 })
 
 export class MessagesComponent implements OnInit, OnDestroy {
-  @ViewChild('idAdd') idAdd;
-  @ViewChild('messageAdd') messageAdd;
+  @ViewChild('idAdd') idAdd: ElementRef;
+  @ViewChild('messageAdd') messageAdd: ElementRef;
   messagesGetSubscription: Subscription;
   messagesAddSubscription: Subscription;
   canAdd: boolean = false;
@@ -53,6 +53,7 @@ export class MessagesComponent implements OnInit, OnDestroy {
           (error) => console.log(error),
         );
       this.addInit();
+      this.resetForm();
     }
   }
 
@@ -61,5 +62,9 @@ export class MessagesComponent implements OnInit, OnDestroy {
       message: this.newMessage,
       id: this.newId,
     };
+  }
+
+  resetForm() {
+    this.f.reset();
   }
 }
