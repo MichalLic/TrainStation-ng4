@@ -32,6 +32,9 @@
               <mat-chip *ngIf="idAdd.invalid && idAdd.dirty || f.submitted && idAdd.invalid" selected="true" color="warn">
                 odidididdi
               </mat-chip>
+              <mat-chip *ngIf="isUsedId" selected="true" color="warn">
+                Your ID is currently in use!
+              </mat-chip>
             </mat-chip-list>
           </div>
           <div class="input-box">

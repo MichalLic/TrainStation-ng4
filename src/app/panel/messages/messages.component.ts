@@ -2,6 +2,11 @@ import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core
 import {DataStorageService} from '../../data-storage.service';
 import {Subscription} from 'rxjs/Subscription';
 import {Message} from '../../message';
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/observable/from';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/do';
 
 @Component({
   selector: 'app-messages',
@@ -19,8 +24,8 @@ export class MessagesComponent implements OnInit, OnDestroy {
   messageObject: Message;
   newMessage: string;
   newId: number;
+  isUsedId: boolean = false;
   @ViewChild('f') f;
-
 
   constructor(private dataStorageService: DataStorageService) {
   }
@@ -44,8 +49,10 @@ export class MessagesComponent implements OnInit, OnDestroy {
   }
 
   onAdd() {
-    if (this.f.valid) {
-      this.getFieldsValues();
+    this.isUsedId = false;
+    this.getFieldsValues();
+    this.checkId(this.newId);
+    if (this.f.valid && !this.isUsedId) {
       this.messages.push(this.messageObject);
       this.messagesAddSubscription = this.dataStorageService.addMessage(this.messages)
         .subscribe(
@@ -66,5 +73,16 @@ export class MessagesComponent implements OnInit, OnDestroy {
 
   resetForm() {
     this.f.reset();
+  }
+
+  checkId(id) {
+    const value = Observable.from(this.messages);
+    value
+      .map(val => val.id)
+      .filter(val => val === id)
+      .subscribe(checkedId => {
+        this.isUsedId = true;
+      });
+
   }
 }
