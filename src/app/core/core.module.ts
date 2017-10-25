@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {HeaderComponent} from './header/header.component';
 import {FooterComponent} from './footer/footer.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule, MatFormFieldModule, MatInputModule, MatTableModule} from '@angular/material';
+import {MatButtonModule, MatChipsModule, MatFormFieldModule, MatInputModule, MatTableModule} from '@angular/material';
 import {CommonModule} from '@angular/common';
 import {AppRoutingModule} from '../app.routing.module';
 import {DataStorageService} from '../data-storage.service';
@@ -19,7 +19,8 @@ import {DataStorageService} from '../data-storage.service';
     MatButtonModule,
     MatTableModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatChipsModule
   ],
   exports: [
     HeaderComponent,
@@ -28,7 +29,8 @@ import {DataStorageService} from '../data-storage.service';
     MatTableModule,
     MatButtonModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatChipsModule
   ],
   providers: [
     DataStorageService

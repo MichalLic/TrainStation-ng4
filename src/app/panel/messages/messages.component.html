@@ -10,29 +10,51 @@
       </div>
       <div class="table-add"
            *ngIf="canAdd">
-        <div class="example-container">
+        <form class="example-container" #f="ngForm">
           <button mat-button
                   color="primary"
                   (click)="onAdd()"
+                  type="submit"
           >Save message
           </button>
-          <mat-form-field>
-            <input matInput
-                   placeholder="ID"
-                   #idAdd
-                   required
-                   type="number"
-            >
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput
-                   placeholder="Message"
-                   #messageAdd
-                   required
-                   type="text"
-            >
-          </mat-form-field>
-        </div>
+          <div class="input-box">
+            <mat-form-field>
+              <input matInput
+                     placeholder="ID"
+                     #idAdd="ngModel"
+                     name="id-add"
+                     [(ngModel)]="newId"
+                     required
+                     type="number"
+              >
+            </mat-form-field>
+            <mat-chip-list class="mat-chip-list-stacked">
+              <mat-chip *ngIf="idAdd.invalid && idAdd.dirty || f.submitted && idAdd.invalid" selected="true" color="warn">
+                odidididdi
+              </mat-chip>
+              <mat-chip *ngIf="isUsedId" selected="true" color="warn">
+                Your ID is currently in use!
+              </mat-chip>
+            </mat-chip-list>
+          </div>
+          <div class="input-box">
+            <mat-form-field>
+              <input matInput
+                     placeholder="Message"
+                     #messageAdd="ngModel"
+                     [(ngModel)]="newMessage"
+                     required
+                     name="message-add"
+                     type="text"
+              >
+            </mat-form-field>
+            <mat-chip-list class="mat-chip-list-stacked">
+              <mat-chip *ngIf="messageAdd.invalid && messageAdd.dirty || f.submitted && messageAdd.invalid" selected="true" color="warn">
+                odidididdi
+              </mat-chip>
+            </mat-chip-list>
+          </div>
+        </form>
       </div>
       <div class="table-hd">
         <p class="table-id">ID</p>
