@@ -5,6 +5,7 @@ import {CoreModule} from '../core/core.module';
 import {CommonModule} from '@angular/common';
 import {DetailsMessagesComponent} from './messages/details-messages/details-messages.component';
 import {FormsModule} from '@angular/forms';
+import {MomentModule} from 'angular2-moment';
 @NgModule({
   declarations: [
     MessagesComponent,
@@ -15,6 +16,7 @@ import {FormsModule} from '@angular/forms';
     CommonModule,
     CoreModule,
     FormsModule,
+    MomentModule
   ],
   exports: [
     DetailsMessagesComponent

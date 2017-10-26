@@ -11,6 +11,12 @@
     </mat-form-field>
   </form>
 </span>
+<span class="table-col created-col">
+{{detail.create | amLocal | amDateFormat: 'YYYY-MM-DD HH:mm' }}
+</span>
+<span class="table-col updated-col">
+  {{detail.updated | amTimeAgo}}
+</span>
 <span class="table-col edit-col">
   <button
     mat-raised-button
@@ -26,8 +32,6 @@
            (click)="onRemove()">Remove
   </button>
 </span>
-
-
 
 
 <!--Hello, Where are you want to go?-->

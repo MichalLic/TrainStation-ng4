@@ -27,7 +27,7 @@ app-details-messages {
     justify-content: center;
     border: 1px solid;
 
-    &:nth-of-type(2) {
+    &:nth-of-type(2n) {
       border-left: none;
       border-right: none;
     }

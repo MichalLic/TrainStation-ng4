@@ -27,7 +27,8 @@ export class MessagesComponent implements OnInit, OnDestroy {
   newId: number;
   isUsedId: boolean = false;
   @ViewChild('f') f;
-
+  createdMessageTime;
+  
   constructor(private dataStorageService: DataStorageService) {
   }
 
@@ -55,6 +56,7 @@ export class MessagesComponent implements OnInit, OnDestroy {
     this.checkId(this.newId);
     if (this.f.valid && !this.isUsedId) {
       this.messages.push(this.messageObject);
+      console.log(this.messageObject)
       this.messagesAddSubscription = this.dataStorageService.addMessage(this.messages)
         .subscribe(
           (response) => console.log(response),
@@ -67,9 +69,12 @@ export class MessagesComponent implements OnInit, OnDestroy {
   }
 
   getFieldsValues() {
+    this.onCreatedTime();
     this.messageObject = {
       message: this.newMessage,
       id: this.newId,
+      created: this.createdMessageTime,
+      updated: this.createdMessageTime,
     };
   }
 
@@ -92,5 +97,9 @@ export class MessagesComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.successMessage = false;
     }, 3000);
+  }
+
+  onCreatedTime() {
+    this.createdMessageTime = new Date();
   }
 }

@@ -13,6 +13,7 @@ export class DetailsMessagesComponent implements OnInit {
   @Input() messages: Message[];
   isEdited: boolean = false;
   canSave: boolean = false;
+  createdMessageTime;
 
   constructor(private dataStorageService: DataStorageService) {
   }
@@ -26,7 +27,6 @@ export class DetailsMessagesComponent implements OnInit {
 
   onEdit() {
     this.isEdited = !this.isEdited;
-
     if (this.isEdited === true) {
       this.canSave = !this.canSave;
     } else {
@@ -35,6 +35,7 @@ export class DetailsMessagesComponent implements OnInit {
   }
 
   onSave() {
+    this.detail.updated = this.onCreatedTime();
     this.dataStorageService.editMessages(this.index, this.detail)
       .subscribe(
         (response) => console.log(response),
@@ -53,5 +54,8 @@ export class DetailsMessagesComponent implements OnInit {
         (error) => console.log(error)
       );
   }
-}
 
+  onCreatedTime() {
+     this.createdMessageTime = new Date();
+  }
+}

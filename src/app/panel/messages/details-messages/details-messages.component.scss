@@ -1,9 +1,10 @@
 @import "../messages.component";
 
-.edit-col{
+.edit-col {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  border-left: none;
 }
 
 span {
@@ -17,15 +18,19 @@ span {
   }
 }
 
-.table-input{
+.table-input {
   padding: 0 0 0 10px;
 
   form {
     width: 100%;
     padding-right: 10px;
 
-    mat-form-field{
+    mat-form-field {
       width: 100%;
     }
   }
+}
+
+.updated-col{
+  border-left: none;
 }

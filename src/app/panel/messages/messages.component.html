@@ -37,7 +37,7 @@
             </mat-form-field>
             <mat-chip-list class="mat-chip-list-stacked">
               <mat-chip *ngIf="idAdd.invalid && idAdd.dirty || f.submitted && idAdd.invalid" selected="true" color="warn">
-                odidididdi
+                Please enter ID!
               </mat-chip>
               <mat-chip *ngIf="isUsedId" selected="true" color="warn">
                 Your ID is currently in use!
@@ -57,7 +57,7 @@
             </mat-form-field>
             <mat-chip-list class="mat-chip-list-stacked">
               <mat-chip *ngIf="messageAdd.invalid && messageAdd.dirty || f.submitted && messageAdd.invalid" selected="true" color="warn">
-                odidididdi
+               Please enter a message!
               </mat-chip>
             </mat-chip-list>
           </div>
@@ -66,6 +66,8 @@
       <div class="table-hd">
         <p class="table-id">ID</p>
         <p class="table-col">Message</p>
+        <p class="table-col">Date created</p>
+        <p class="table-col">Last updated</p>
         <p class="table-col">Edit</p>
       </div>
       <app-details-messages
