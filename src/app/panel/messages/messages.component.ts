@@ -23,6 +23,7 @@ export class MessagesComponent implements OnInit, OnDestroy {
   messages: Message[];
   messageObject: Message;
   newMessage: string;
+  successMessage: boolean = false;
   newId: number;
   isUsedId: boolean = false;
   @ViewChild('f') f;
@@ -61,6 +62,7 @@ export class MessagesComponent implements OnInit, OnDestroy {
         );
       this.addInit();
       this.resetForm();
+      this.showSuccessMessage();
     }
   }
 
@@ -83,6 +85,12 @@ export class MessagesComponent implements OnInit, OnDestroy {
       .subscribe(checkedId => {
         this.isUsedId = true;
       });
+  }
 
+  showSuccessMessage() {
+    this.successMessage = true;
+    setTimeout(() => {
+      this.successMessage = false;
+    }, 3000);
   }
 }

@@ -8,6 +8,13 @@
         >Add new message
         </button>
       </div>
+      <div class="table-info" *ngIf="successMessage" style="display: flex">
+        <mat-chip-list class="mat-chip-list-stacked">
+          <mat-chip selected="true" color="primary">
+            New message was added!
+          </mat-chip>
+        </mat-chip-list>
+      </div>
       <div class="table-add"
            *ngIf="canAdd">
         <form class="example-container" #f="ngForm">
