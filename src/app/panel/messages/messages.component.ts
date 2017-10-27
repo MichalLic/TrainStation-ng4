@@ -4,9 +4,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {Message} from '../../message';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/from';
-import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/do';
 
 @Component({
   selector: 'app-messages',
@@ -19,16 +17,18 @@ export class MessagesComponent implements OnInit, OnDestroy {
   @ViewChild('messageAdd') messageAdd: ElementRef;
   messagesGetSubscription: Subscription;
   messagesAddSubscription: Subscription;
-  canAdd: boolean = false;
+  stationsGetSubscription: Subscription;
   messages: Message[];
+  stations;
   messageObject: Message;
   newMessage: string;
-  successMessage: boolean = false;
   newId: number;
   isUsedId: boolean = false;
+  canAdd: boolean = false;
+  successMessage: boolean = false;
   @ViewChild('f') f;
   createdMessageTime;
-  
+
   constructor(private dataStorageService: DataStorageService) {
   }
 
@@ -39,25 +39,30 @@ export class MessagesComponent implements OnInit, OnDestroy {
         console.log(this.messages);
       });
 
+    this.stationsGetSubscription = this.dataStorageService.getStations()
+      .subscribe(data => {
+        this.stations = data;
+        console.log(this.stations);
+      });
   }
 
   ngOnDestroy() {
     this.messagesGetSubscription.unsubscribe();
     this.messagesAddSubscription.unsubscribe();
+    this.stationsGetSubscription.unsubscribe();
   }
 
   addInit() {
     this.canAdd = !this.canAdd;
   }
 
-  onAdd() {
+  onAdd(point) {
     this.isUsedId = false;
     this.getFieldsValues();
     this.checkId(this.newId);
     if (this.f.valid && !this.isUsedId) {
       this.messages.push(this.messageObject);
-      console.log(this.messageObject)
-      this.messagesAddSubscription = this.dataStorageService.addMessage(this.messages)
+      this.messagesAddSubscription = this.dataStorageService.addMessage(this.messages, point)
         .subscribe(
           (response) => console.log(response),
           (error) => console.log(error),

@@ -1,0 +1,34 @@
+<span class="table-id">{{detail.id}}</span>
+<span class="table-col" *ngIf="!isEdited">{{detail.station}}</span>
+<span *ngIf="isEdited" class="table-col table-input">
+  <form class="example-form">
+    <mat-form-field class="example-full-width">
+      <input matInput
+             #name
+             placeholder="New message"
+             (input)="onNameChange(name.value)"
+      >
+    </mat-form-field>
+  </form>
+</span>
+<span class="table-col created-col">
+{{detail.create | amLocal | amDateFormat: 'YYYY-MM-DD HH:mm' }}
+</span>
+<span class="table-col updated-col">
+  {{detail.updated | amTimeAgo}}
+</span>
+<span class="table-col edit-col">
+  <button
+    mat-raised-button
+    ngClass="{{!isEdited ? 'mat-primary' : ''}}"
+    (click)="onEdit()"> {{!isEdited ? 'Edit' : 'Cancel'}}
+  </button>
+  <button *ngIf="canSave"
+          mat-raised-button color="primary"
+          (click)="onSave()">Save
+  </button>
+   <button *ngIf="canSave"
+           mat-raised-button color="warn"
+           (click)="onRemove()">Remove
+  </button>
+</span>

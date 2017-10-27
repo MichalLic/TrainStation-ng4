@@ -7,6 +7,11 @@
                 (click)="addInit()"
         >Add new message
         </button>
+        <button mat-button
+                color="primary"
+                (click)="addInit()"
+        >Add new station
+        </button>
       </div>
       <div class="table-info" *ngIf="successMessage" style="display: flex">
         <mat-chip-list class="mat-chip-list-stacked">
@@ -20,7 +25,7 @@
         <form class="example-container" #f="ngForm">
           <button mat-button
                   color="primary"
-                  (click)="onAdd()"
+                  (click)="onAdd('hello')"
                   type="submit"
           >Save message
           </button>
@@ -76,6 +81,13 @@
         [index]=i
         [messages]=messages
       ></app-details-messages>
+      <app-stations
+        *ngFor="let station of stations; let i = index"
+        [detail]=station
+        [index]=i
+        [stations]=stations
+      >
+      </app-stations>
     </div>
   </div>
 </section>
