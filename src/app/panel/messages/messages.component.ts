@@ -59,10 +59,12 @@ export class MessagesComponent implements OnInit, OnDestroy {
   }
 
   addInitMessage() {
+    this.canAddStation = false;
     this.canAddMessage = !this.canAddMessage;
   }
 
   addInitStation() {
+    this.canAddMessage = false;
     this.canAddStation = !this.canAddStation;
   }
 

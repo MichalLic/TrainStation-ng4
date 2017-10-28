@@ -21,7 +21,7 @@ export class StationsComponent implements OnInit {
   }
 
   onNameChange(value) {
-    this.detail.message = value;
+    this.detail.station = value;
   }
 
   onEdit() {
