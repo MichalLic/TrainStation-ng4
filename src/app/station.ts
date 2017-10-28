@@ -1,6 +1,6 @@
-export interface Message {
+export interface Station {
   id: number;
-  message: string;
+  station: string;
   created: any;
   updated: any;
 }

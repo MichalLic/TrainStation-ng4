@@ -2,8 +2,10 @@ import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core
 import {DataStorageService} from '../../data-storage.service';
 import {Subscription} from 'rxjs/Subscription';
 import {Message} from '../../message';
+import {Station} from '../../station';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/from';
+import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/filter';
 
 @Component({
@@ -18,13 +20,16 @@ export class MessagesComponent implements OnInit, OnDestroy {
   messagesGetSubscription: Subscription;
   messagesAddSubscription: Subscription;
   stationsGetSubscription: Subscription;
+  stationsAddSubscription: Subscription;
   messages: Message[];
-  stations;
   messageObject: Message;
+  stations: Station[];
+  stationObject: Station;
   newMessage: string;
   newId: number;
   isUsedId: boolean = false;
-  canAdd: boolean = false;
+  canAddMessage: boolean = false;
+  canAddStation: boolean = false;
   successMessage: boolean = false;
   @ViewChild('f') f;
   createdMessageTime;
@@ -50,33 +55,65 @@ export class MessagesComponent implements OnInit, OnDestroy {
     this.messagesGetSubscription.unsubscribe();
     this.messagesAddSubscription.unsubscribe();
     this.stationsGetSubscription.unsubscribe();
+    this.stationsAddSubscription.unsubscribe();
   }
 
-  addInit() {
-    this.canAdd = !this.canAdd;
+  addInitMessage() {
+    this.canAddMessage = !this.canAddMessage;
   }
 
-  onAdd(point) {
+  addInitStation() {
+    this.canAddStation = !this.canAddStation;
+  }
+
+  onAddMessage() {
     this.isUsedId = false;
-    this.getFieldsValues();
+    this.getMessageFormValue();
     this.checkId(this.newId);
     if (this.f.valid && !this.isUsedId) {
       this.messages.push(this.messageObject);
-      this.messagesAddSubscription = this.dataStorageService.addMessage(this.messages, point)
+      this.messagesAddSubscription = this.dataStorageService.addMessage(this.messages, 'hello')
         .subscribe(
           (response) => console.log(response),
           (error) => console.log(error),
         );
-      this.addInit();
+      this.addInitMessage();
       this.resetForm();
       this.showSuccessMessage();
     }
   }
 
-  getFieldsValues() {
+  onAddStation() {
+    this.isUsedId = false;
+    this.getStationFormValue();
+    this.checkId(this.newId);
+    if (this.f.valid && !this.isUsedId) {
+      this.stations.push(this.stationObject);
+      this.stationsAddSubscription = this.dataStorageService.addMessage(this.stations, 'stations')
+        .subscribe(
+          (response) => console.log(response),
+          (error) => console.log(error),
+        );
+      this.addInitStation();
+      this.resetForm();
+      this.showSuccessMessage();
+    }
+  }
+
+  getMessageFormValue() {
     this.onCreatedTime();
     this.messageObject = {
       message: this.newMessage,
+      id: this.newId,
+      created: this.createdMessageTime,
+      updated: this.createdMessageTime,
+    };
+  }
+
+  getStationFormValue() {
+    this.onCreatedTime();
+    this.stationObject = {
+      station: this.newMessage,
       id: this.newId,
       created: this.createdMessageTime,
       updated: this.createdMessageTime,
@@ -88,8 +125,11 @@ export class MessagesComponent implements OnInit, OnDestroy {
   }
 
   checkId(id) {
-    const value = Observable.from(this.messages);
-    value
+    const value1$ = Observable.from(this.messages);
+    const value2$ = Observable.from(this.stations);
+
+    Observable
+      .merge(value1$, value2$)
       .map(val => val.id)
       .filter(val => val === id)
       .subscribe(checkedId => {
