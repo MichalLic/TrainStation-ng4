@@ -107,8 +107,8 @@ export class MessagesComponent implements OnInit, OnDestroy {
     this.messageObject = {
       message: this.newMessage,
       id: this.newId,
-      created: this.createdMessageTime,
-      updated: this.createdMessageTime,
+      created:  this.onCreatedTime(),
+      updated:  this.onCreatedTime()
     };
   }
 
@@ -117,8 +117,8 @@ export class MessagesComponent implements OnInit, OnDestroy {
     this.stationObject = {
       station: this.newMessage,
       id: this.newId,
-      created: this.createdMessageTime,
-      updated: this.createdMessageTime,
+      created: this.onCreatedTime(),
+      updated: this.onCreatedTime()
     };
   }
 
@@ -147,6 +147,6 @@ export class MessagesComponent implements OnInit, OnDestroy {
   }
 
   onCreatedTime() {
-    this.createdMessageTime = new Date();
+    return this.createdMessageTime = new Date().toString();
   }
 }

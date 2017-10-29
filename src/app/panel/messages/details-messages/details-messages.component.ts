@@ -56,6 +56,6 @@ export class DetailsMessagesComponent implements OnInit {
   }
 
   onCreatedTime() {
-     this.createdMessageTime = new Date();
+    return this.createdMessageTime = new Date().toString();
   }
 }
