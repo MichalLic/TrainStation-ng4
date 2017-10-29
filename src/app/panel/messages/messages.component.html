@@ -4,18 +4,38 @@
       <div class="table-option">
         <button mat-button
                 color="primary"
-                (click)="addInit()"
+                (click)="addInitMessage()"
         >Add new message
         </button>
+        <button mat-button
+                color="primary"
+                (click)="addInitStation()"
+        >Add new station
+        </button>
+      </div>
+      <div class="table-info" *ngIf="successMessage" style="display: flex">
+        <mat-chip-list class="mat-chip-list-stacked">
+          <mat-chip selected="true" color="primary">
+            New message was added!
+          </mat-chip>
+        </mat-chip-list>
       </div>
       <div class="table-add"
-           *ngIf="canAdd">
+           *ngIf="canAddStation || canAddMessage">
         <form class="example-container" #f="ngForm">
           <button mat-button
                   color="primary"
-                  (click)="onAdd()"
+                  (click)="onAddMessage()"
                   type="submit"
+                  *ngIf="canAddMessage"
           >Save message
+          </button>
+          <button mat-button
+                  color="primary"
+                  (click)="onAddStation()"
+                  type="submit"
+                  *ngIf="canAddStation"
+          >Save station
           </button>
           <div class="input-box">
             <mat-form-field>
@@ -30,7 +50,7 @@
             </mat-form-field>
             <mat-chip-list class="mat-chip-list-stacked">
               <mat-chip *ngIf="idAdd.invalid && idAdd.dirty || f.submitted && idAdd.invalid" selected="true" color="warn">
-                odidididdi
+                Please enter ID!
               </mat-chip>
               <mat-chip *ngIf="isUsedId" selected="true" color="warn">
                 Your ID is currently in use!
@@ -50,7 +70,7 @@
             </mat-form-field>
             <mat-chip-list class="mat-chip-list-stacked">
               <mat-chip *ngIf="messageAdd.invalid && messageAdd.dirty || f.submitted && messageAdd.invalid" selected="true" color="warn">
-                odidididdi
+               Please enter a message!
               </mat-chip>
             </mat-chip-list>
           </div>
@@ -58,7 +78,9 @@
       </div>
       <div class="table-hd">
         <p class="table-id">ID</p>
-        <p class="table-col">Message</p>
+        <p class="table-col">Message/Station</p>
+        <p class="table-col">Date created</p>
+        <p class="table-col">Last updated</p>
         <p class="table-col">Edit</p>
       </div>
       <app-details-messages
@@ -67,6 +89,13 @@
         [index]=i
         [messages]=messages
       ></app-details-messages>
+      <app-stations
+        *ngFor="let station of stations; let i = index"
+        [detail]=station
+        [index]=i
+        [stations]=stations
+      >
+      </app-stations>
     </div>
   </div>
 </section>

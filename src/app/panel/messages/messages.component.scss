@@ -1,8 +1,10 @@
-app-details-messages {
+app-details-messages
+,app-stations{
   display: flex;
 }
 
-.table-option{
+
+.table-option {
   padding: 20px 0;
 }
 
@@ -25,9 +27,9 @@ app-details-messages {
     text-align: center;
     display: flex;
     justify-content: center;
-    border: 1px solid ;
+    border: 1px solid;
 
-    &:nth-of-type(2) {
+    &:nth-of-type(2n) {
       border-left: none;
       border-right: none;
     }
@@ -46,4 +48,10 @@ app-details-messages {
   flex: 1;
   display: flex;
   align-items: center;
+}
+
+.table-info {
+  display: flex;
+  justify-content: center;
+  padding: 30px 0;
 }

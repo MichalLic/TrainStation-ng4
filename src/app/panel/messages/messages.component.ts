@@ -2,11 +2,11 @@ import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core
 import {DataStorageService} from '../../data-storage.service';
 import {Subscription} from 'rxjs/Subscription';
 import {Message} from '../../message';
+import {Station} from '../../station';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/from';
-import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/do';
 
 @Component({
   selector: 'app-messages',
@@ -19,13 +19,20 @@ export class MessagesComponent implements OnInit, OnDestroy {
   @ViewChild('messageAdd') messageAdd: ElementRef;
   messagesGetSubscription: Subscription;
   messagesAddSubscription: Subscription;
-  canAdd: boolean = false;
+  stationsGetSubscription: Subscription;
+  stationsAddSubscription: Subscription;
   messages: Message[];
   messageObject: Message;
+  stations: Station[];
+  stationObject: Station;
   newMessage: string;
   newId: number;
   isUsedId: boolean = false;
+  canAddMessage: boolean = false;
+  canAddStation: boolean = false;
+  successMessage: boolean = false;
   @ViewChild('f') f;
+  createdMessageTime;
 
   constructor(private dataStorageService: DataStorageService) {
   }
@@ -37,37 +44,81 @@ export class MessagesComponent implements OnInit, OnDestroy {
         console.log(this.messages);
       });
 
+    this.stationsGetSubscription = this.dataStorageService.getStations()
+      .subscribe(data => {
+        this.stations = data;
+        console.log(this.stations);
+      });
   }
 
   ngOnDestroy() {
     this.messagesGetSubscription.unsubscribe();
     this.messagesAddSubscription.unsubscribe();
+    this.stationsGetSubscription.unsubscribe();
+    this.stationsAddSubscription.unsubscribe();
   }
 
-  addInit() {
-    this.canAdd = !this.canAdd;
+  addInitMessage() {
+    this.canAddStation = false;
+    this.canAddMessage = !this.canAddMessage;
   }
 
-  onAdd() {
+  addInitStation() {
+    this.canAddMessage = false;
+    this.canAddStation = !this.canAddStation;
+  }
+
+  onAddMessage() {
     this.isUsedId = false;
-    this.getFieldsValues();
+    this.getMessageFormValue();
     this.checkId(this.newId);
     if (this.f.valid && !this.isUsedId) {
       this.messages.push(this.messageObject);
-      this.messagesAddSubscription = this.dataStorageService.addMessage(this.messages)
+      this.messagesAddSubscription = this.dataStorageService.addMessage(this.messages, 'hello')
         .subscribe(
           (response) => console.log(response),
           (error) => console.log(error),
         );
-      this.addInit();
+      this.addInitMessage();
       this.resetForm();
+      this.showSuccessMessage();
     }
   }
 
-  getFieldsValues() {
+  onAddStation() {
+    this.isUsedId = false;
+    this.getStationFormValue();
+    this.checkId(this.newId);
+    if (this.f.valid && !this.isUsedId) {
+      this.stations.push(this.stationObject);
+      this.stationsAddSubscription = this.dataStorageService.addMessage(this.stations, 'stations')
+        .subscribe(
+          (response) => console.log(response),
+          (error) => console.log(error),
+        );
+      this.addInitStation();
+      this.resetForm();
+      this.showSuccessMessage();
+    }
+  }
+
+  getMessageFormValue() {
+    this.onCreatedTime();
     this.messageObject = {
       message: this.newMessage,
       id: this.newId,
+      created:  this.onCreatedTime(),
+      updated:  this.onCreatedTime()
+    };
+  }
+
+  getStationFormValue() {
+    this.onCreatedTime();
+    this.stationObject = {
+      station: this.newMessage,
+      id: this.newId,
+      created: this.onCreatedTime(),
+      updated: this.onCreatedTime()
     };
   }
 
@@ -76,13 +127,26 @@ export class MessagesComponent implements OnInit, OnDestroy {
   }
 
   checkId(id) {
-    const value = Observable.from(this.messages);
-    value
+    const value1$ = Observable.from(this.messages);
+    const value2$ = Observable.from(this.stations);
+
+    Observable
+      .merge(value1$, value2$)
       .map(val => val.id)
       .filter(val => val === id)
       .subscribe(checkedId => {
         this.isUsedId = true;
       });
+  }
 
+  showSuccessMessage() {
+    this.successMessage = true;
+    setTimeout(() => {
+      this.successMessage = false;
+    }, 3000);
+  }
+
+  onCreatedTime() {
+    return this.createdMessageTime = new Date().toString();
   }
 }

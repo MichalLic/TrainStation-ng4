@@ -1,16 +1,15 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {DataStorageService} from '../../../data-storage.service';
-import {Message} from '../../../message';
 
 @Component({
-  selector: 'app-details-messages',
-  templateUrl: './details-messages.component.html',
-  styleUrls: ['./details-messages.component.scss']
+  selector: 'app-stations',
+  templateUrl: './stations.component.html',
+  styleUrls: ['./stations.component.scss']
 })
-export class DetailsMessagesComponent implements OnInit {
-  @Input() detail: Message;
+export class StationsComponent implements OnInit {
+  @Input() detail;
   @Input() index;
-  @Input() messages: Message[];
+  @Input() stations;
   isEdited: boolean = false;
   canSave: boolean = false;
   createdMessageTime;
@@ -22,7 +21,7 @@ export class DetailsMessagesComponent implements OnInit {
   }
 
   onNameChange(value) {
-    this.detail.message = value;
+    this.detail.station = value;
   }
 
   onEdit() {
@@ -36,7 +35,7 @@ export class DetailsMessagesComponent implements OnInit {
 
   onSave() {
     this.detail.updated = this.onCreatedTime();
-    this.dataStorageService.editMessages(this.index, this.detail, 'hello')
+    this.dataStorageService.editMessages(this.index, this.detail, 'stations')
       .subscribe(
         (response) => console.log(response),
         (error) => console.log(error)
@@ -46,9 +45,9 @@ export class DetailsMessagesComponent implements OnInit {
   }
 
   onRemove() {
-    this.messages.splice(this.index, 1);
-    console.log(this.messages);
-    this.dataStorageService.removeMessage(this.messages, 'hello')
+    this.stations.splice(this.index, 1);
+    console.log(this.stations);
+    this.dataStorageService.removeMessage(this.stations, 'stations')
       .subscribe(
         (response) => console.log(response),
         (error) => console.log(error)
@@ -58,4 +57,5 @@ export class DetailsMessagesComponent implements OnInit {
   onCreatedTime() {
     return this.createdMessageTime = new Date().toString();
   }
+
 }

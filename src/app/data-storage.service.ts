@@ -19,19 +19,29 @@ export class DataStorageService {
       );
   }
 
-  editMessages(id, object) {
+  editMessages(id, object, point) {
     const headers = new Headers({'Content-Type': 'application/json'});
-    return this.http.put('https://trainstation-720e3.firebaseio.com/hello/' + id + '.json', object, {headers: headers});
+    return this.http.put('https://trainstation-720e3.firebaseio.com/' + point + '/' + id + '.json', object, {headers: headers});
   }
 
-  addMessage(object) {
+  addMessage(object, point) {
     const headers = new Headers({'Content-Type': 'application/json'});
-    return this.http.put('https://trainstation-720e3.firebaseio.com/hello/.json', object, {headers: headers});
+    return this.http.put('https://trainstation-720e3.firebaseio.com/' + point + '/.json', object, {headers: headers});
   }
 
-  removeMessage(object) {
+  removeMessage(object, point) {
     const headers = new Headers({'Content-Type': 'application/json'});
-    return this.http.put('https://trainstation-720e3.firebaseio.com/hello/.json', object, {headers: headers});
+    return this.http.put('https://trainstation-720e3.firebaseio.com/' + point + '/.json', object, {headers: headers});
+  }
+
+  getStations() {
+    return this.http.get('https://trainstation-720e3.firebaseio.com/stations.json')
+      .map(
+        (response: Response) => {
+          console.log(response);
+          return response.json();
+        }
+      );
   }
 
 }
