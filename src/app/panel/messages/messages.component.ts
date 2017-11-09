@@ -52,10 +52,23 @@ export class MessagesComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.messagesGetSubscription.unsubscribe();
-    this.messagesAddSubscription.unsubscribe();
-    this.stationsGetSubscription.unsubscribe();
-    this.stationsAddSubscription.unsubscribe();
+    if (this.messagesGetSubscription) {
+      this.messagesGetSubscription.unsubscribe();
+    }
+    if (this.messagesGetSubscription) {
+      this.messagesGetSubscription.unsubscribe();
+    }
+    if (this.messagesAddSubscription) {
+      this.messagesAddSubscription.unsubscribe();
+    }
+    if (this.stationsAddSubscription) {
+      this.stationsAddSubscription.unsubscribe();
+    }
+
+    // this.messagesGetSubscription.unsubscribe();
+    // this.messagesAddSubscription.unsubscribe();
+    // this.stationsGetSubscription.unsubscribe();
+    // this.stationsAddSubscription.unsubscribe();
   }
 
   addInitMessage() {
@@ -107,8 +120,8 @@ export class MessagesComponent implements OnInit, OnDestroy {
     this.messageObject = {
       message: this.newMessage,
       id: this.newId,
-      created:  this.onCreatedTime(),
-      updated:  this.onCreatedTime()
+      created: this.onCreatedTime(),
+      updated: this.onCreatedTime()
     };
   }
 
