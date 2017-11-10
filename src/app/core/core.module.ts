@@ -6,6 +6,8 @@ import {MatButtonModule, MatChipsModule, MatFormFieldModule, MatInputModule, Mat
 import {CommonModule} from '@angular/common';
 import {AppRoutingModule} from '../app.routing.module';
 import {DataStorageService} from '../data-storage.service';
+import {AuthService} from '../auth/auth.service';
+import {AuthGuardService} from '../auth/auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import {DataStorageService} from '../data-storage.service';
     MatChipsModule
   ],
   providers: [
-    DataStorageService
+    DataStorageService,
+    AuthService,
+    AuthGuardService
   ]
 })
 export class CoreModule {

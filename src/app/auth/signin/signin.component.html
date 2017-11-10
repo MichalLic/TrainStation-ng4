@@ -1,3 +1,18 @@
-<p>
-  signin works!
-</p>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <form #f="ngForm" class="example-form" (ngSubmit)="onSignin(f)">
+        <mat-form-field class="example-full-width">
+          <input matInput type="email" id="email" name="email" ngModel class="form-control" placeholder="Mail">
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <input matInput type="password" id="password" name="password" ngModel class="form-control"
+                 placeholder="Password">
+          <span *ngIf="!isLogged" class="label label-danger">Incorrect email or password!</span>
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit">Sign in</button>
+      </form>
+    </div>
+  </div>
+</div>

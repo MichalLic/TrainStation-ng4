@@ -14,3 +14,19 @@
   overflow: hidden;
   padding: 0 15px;
 }
+
+app-signin,
+app-signup {
+  display: flex;
+  align-items: center;
+  flex: 1;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    .mat-form-field {
+      width: 500px;
+    }
+  }
+
+}

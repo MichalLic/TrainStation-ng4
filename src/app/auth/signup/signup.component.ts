@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {AuthService} from "../auth.service";
+import {Router} from "@angular/router";
+import {NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-signup',
@@ -6,10 +9,32 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent implements OnInit {
+  message: string;
+  modalActive = false;
 
-  constructor() { }
+  constructor(private authService: AuthService,
+              private router: Router) {
+  }
 
   ngOnInit() {
+  }
+
+  onSignup(form: NgForm) {
+    const email = form.value.email;
+    const password = form.value.password;
+    this.authService.signupUser(email, password);
+    this.authService.isUsed.subscribe(
+      (data: string) => {
+        this.message = data;
+        if (this.message === 'Signed up correctly') {
+          this.modalActive = true;
+        }
+      }
+    );
+  }
+
+  redirectToPanel() {
+    this.router.navigate(['signin']);
   }
 
 }
