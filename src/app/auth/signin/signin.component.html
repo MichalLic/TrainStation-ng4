@@ -9,8 +9,12 @@
         <mat-form-field class="example-full-width">
           <input matInput type="password" id="password" name="password" ngModel class="form-control"
                  placeholder="Password">
-          <span *ngIf="!isLogged" class="label label-danger">Incorrect email or password!</span>
         </mat-form-field>
+        <mat-chip-list *ngIf="!isLogged" class="mat-chip-list-stacked">
+          <mat-chip selected="true" color="warn">
+            Incorrect email or password!
+          </mat-chip>
+        </mat-chip-list>
         <button mat-raised-button color="primary" type="submit">Sign in</button>
       </form>
     </div>

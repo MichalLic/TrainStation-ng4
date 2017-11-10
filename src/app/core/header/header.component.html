@@ -11,12 +11,27 @@
 <nav>
   <div class="container nav-box">
     <ul>
-      <li *ngFor="let link of navLinks">
-        <a
-          routerLink="/{{link.id}}"
-          routerLinkActive="active"
-        >{{link.name}}</a>
+      <li>
+        <a routerLink="/messages"
+           routerLinkActive="active"
+        >Message</a>
       </li>
+      <li *ngIf="!isLogged">
+        <a
+          routerLink="/signin"
+          routerLinkActive="active">Log in</a>
+      </li>
+      <li *ngIf="!isLogged">
+        <a
+          routerLink="/signup"
+          routerLinkActive="active">Sign up</a>
+      </li>
+      <li *ngIf="isLogged">
+        <a
+          style="cursor: pointer;"
+          type="button"
+          (click)="onLogout()">
+          Log out</a></li>
     </ul>
   </div>
 </nav>
