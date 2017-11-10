@@ -29,7 +29,7 @@ export class SigninComponent implements OnInit {
         this.isLogged = data;
         console.log(this.isLogged);
         if (this.isLogged) {
-          this.router.navigate(['/']);
+          this.router.navigate(['/messages']);
         }
       }
     );

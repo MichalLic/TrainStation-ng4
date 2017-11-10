@@ -27,8 +27,8 @@ export class SignupComponent implements OnInit {
         this.message = data;
         if (this.message === 'Signed up correctly') {
           this.authService.signinUser(email, password);
-          this.router.navigate(['/messages']);
           this.authService.getToken();
+          this.router.navigate(['/messages']);
         }
       }
     );
