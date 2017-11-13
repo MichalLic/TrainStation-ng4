@@ -8,6 +8,7 @@ import {AppRoutingModule} from '../app.routing.module';
 import {DataStorageService} from '../data-storage.service';
 import {AuthService} from '../auth/auth.service';
 import {AuthGuardService} from '../auth/auth-guard.service';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {AuthGuardService} from '../auth/auth-guard.service';
     MatTableModule,
     MatInputModule,
     MatFormFieldModule,
-    MatChipsModule
+    MatChipsModule,
+    ReactiveFormsModule
   ],
   exports: [
     HeaderComponent,
@@ -32,7 +34,8 @@ import {AuthGuardService} from '../auth/auth-guard.service';
     MatButtonModule,
     MatInputModule,
     MatFormFieldModule,
-    MatChipsModule
+    MatChipsModule,
+    ReactiveFormsModule
   ],
   providers: [
     DataStorageService,

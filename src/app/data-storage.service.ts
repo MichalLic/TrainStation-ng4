@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
 import {Http, Response, Headers} from '@angular/http';
 import 'rxjs/add/operator/map';
+import {AuthService} from './auth/auth.service';
 
 
 @Injectable()
 export class DataStorageService {
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private authService: AuthService) {
   }
 
   getMessages() {
@@ -20,18 +21,21 @@ export class DataStorageService {
   }
 
   editMessages(id, object, point) {
+    const token = this.authService.getToken();
     const headers = new Headers({'Content-Type': 'application/json'});
-    return this.http.put('https://trainstation-720e3.firebaseio.com/' + point + '/' + id + '.json', object, {headers: headers});
+    return this.http.put('https://trainstation-720e3.firebaseio.com/' + point + '/' + id + '.json' + '?auth=' + token, object, {headers: headers});
   }
 
   addMessage(object, point) {
+    const token = this.authService.getToken();
     const headers = new Headers({'Content-Type': 'application/json'});
-    return this.http.put('https://trainstation-720e3.firebaseio.com/' + point + '/.json', object, {headers: headers});
+    return this.http.put('https://trainstation-720e3.firebaseio.com/' + point + '/.json' + '?auth=' + token, object, {headers: headers});
   }
 
   removeMessage(object, point) {
+    const token = this.authService.getToken();
     const headers = new Headers({'Content-Type': 'application/json'});
-    return this.http.put('https://trainstation-720e3.firebaseio.com/' + point + '/.json', object, {headers: headers});
+    return this.http.put('https://trainstation-720e3.firebaseio.com/' + point + '/.json' + '?auth=' + token, object, {headers: headers});
   }
 
   getStations() {

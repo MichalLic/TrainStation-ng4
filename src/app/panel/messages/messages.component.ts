@@ -1,12 +1,15 @@
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {DataStorageService} from '../../data-storage.service';
-import {Subscription} from 'rxjs/Subscription';
-import {Message} from '../../message';
-import {Station} from '../../station';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+
 import {Observable} from 'rxjs/Observable';
+import {Subscription} from 'rxjs/Subscription';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/filter';
+
+import {DataStorageService} from '../../data-storage.service';
+import {Station} from '../../station';
+import {Message} from '../../message';
 
 @Component({
   selector: 'app-messages',
@@ -33,8 +36,9 @@ export class MessagesComponent implements OnInit, OnDestroy {
   successMessage: boolean = false;
   @ViewChild('f') f;
   createdMessageTime;
+  myForm: FormGroup;
 
-  constructor(private dataStorageService: DataStorageService) {
+  constructor(private dataStorageService: DataStorageService, private fb: FormBuilder) {
   }
 
   ngOnInit() {
@@ -49,6 +53,24 @@ export class MessagesComponent implements OnInit, OnDestroy {
         this.stations = data;
         console.log(this.stations);
       });
+
+    this.myForm = this.fb.group({
+      idAdd: ['', Validators.required],
+      messageAdd: ['', Validators.required]
+    });
+  }
+
+  onSubmit(form: FormGroup) {
+    console.log(form);
+    console.log('valid?', form.valid);
+    console.log('ID', form.value.idAdd);
+    console.log('mess', form.value.messageAdd);
+    if (this.canAddMessage) {
+      this.onAddMessage();
+    }
+    if (this.canAddStation) {
+      this.onAddStation();
+    }
   }
 
   ngOnDestroy() {
@@ -64,28 +86,25 @@ export class MessagesComponent implements OnInit, OnDestroy {
     if (this.stationsAddSubscription) {
       this.stationsAddSubscription.unsubscribe();
     }
-
-    // this.messagesGetSubscription.unsubscribe();
-    // this.messagesAddSubscription.unsubscribe();
-    // this.stationsGetSubscription.unsubscribe();
-    // this.stationsAddSubscription.unsubscribe();
   }
 
   addInitMessage() {
     this.canAddStation = false;
     this.canAddMessage = !this.canAddMessage;
+    this.resetForm();
   }
 
   addInitStation() {
     this.canAddMessage = false;
     this.canAddStation = !this.canAddStation;
+    this.resetForm();
   }
 
   onAddMessage() {
     this.isUsedId = false;
     this.getMessageFormValue();
-    this.checkId(this.newId);
-    if (this.f.valid && !this.isUsedId) {
+    this.checkId(this.myForm.value.idAdd);
+    if (this.myForm.valid && !this.isUsedId) {
       this.messages.push(this.messageObject);
       this.messagesAddSubscription = this.dataStorageService.addMessage(this.messages, 'hello')
         .subscribe(
@@ -101,8 +120,8 @@ export class MessagesComponent implements OnInit, OnDestroy {
   onAddStation() {
     this.isUsedId = false;
     this.getStationFormValue();
-    this.checkId(this.newId);
-    if (this.f.valid && !this.isUsedId) {
+    this.checkId(this.myForm.value.idAdd);
+    if (this.myForm.valid && !this.isUsedId) {
       this.stations.push(this.stationObject);
       this.stationsAddSubscription = this.dataStorageService.addMessage(this.stations, 'stations')
         .subscribe(
@@ -118,8 +137,8 @@ export class MessagesComponent implements OnInit, OnDestroy {
   getMessageFormValue() {
     this.onCreatedTime();
     this.messageObject = {
-      message: this.newMessage,
-      id: this.newId,
+      message: this.myForm.value.messageAdd,
+      id: this.myForm.value.idAdd,
       created: this.onCreatedTime(),
       updated: this.onCreatedTime()
     };
@@ -128,15 +147,15 @@ export class MessagesComponent implements OnInit, OnDestroy {
   getStationFormValue() {
     this.onCreatedTime();
     this.stationObject = {
-      station: this.newMessage,
-      id: this.newId,
+      station: this.myForm.value.messageAdd,
+      id: this.myForm.value.idAdd,
       created: this.onCreatedTime(),
       updated: this.onCreatedTime()
     };
   }
 
   resetForm() {
-    this.f.reset();
+    this.myForm.reset();
   }
 
   checkId(id) {

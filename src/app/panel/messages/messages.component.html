@@ -22,17 +22,15 @@
       </div>
       <div class="table-add"
            *ngIf="canAddStation || canAddMessage">
-        <form class="example-container" #f="ngForm">
+        <form class="example-container" [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
           <button mat-button
                   color="primary"
-                  (click)="onAddMessage()"
                   type="submit"
                   *ngIf="canAddMessage"
           >Save message
           </button>
           <button mat-button
                   color="primary"
-                  (click)="onAddStation()"
                   type="submit"
                   *ngIf="canAddStation"
           >Save station
@@ -40,16 +38,15 @@
           <div class="input-box">
             <mat-form-field>
               <input matInput
+                     formControlName="idAdd"
                      placeholder="ID"
-                     #idAdd="ngModel"
-                     name="id-add"
-                     [(ngModel)]="newId"
-                     required
                      type="number"
               >
             </mat-form-field>
             <mat-chip-list class="mat-chip-list-stacked">
-              <mat-chip *ngIf="idAdd.invalid && idAdd.dirty || f.submitted && idAdd.invalid" selected="true" color="warn">
+              <mat-chip
+                *ngIf="myForm.get('idAdd').invalid && myForm.get('idAdd').dirty || myForm.submitted && myForm.get('idAdd').invalid"
+                selected="true" color="warn">
                 Please enter ID!
               </mat-chip>
               <mat-chip *ngIf="isUsedId" selected="true" color="warn">
@@ -60,17 +57,15 @@
           <div class="input-box">
             <mat-form-field>
               <input matInput
-                     placeholder="Message"
-                     #messageAdd="ngModel"
-                     [(ngModel)]="newMessage"
-                     required
-                     name="message-add"
+                     formControlName="messageAdd"
                      type="text"
               >
             </mat-form-field>
             <mat-chip-list class="mat-chip-list-stacked">
-              <mat-chip *ngIf="messageAdd.invalid && messageAdd.dirty || f.submitted && messageAdd.invalid" selected="true" color="warn">
-               Please enter a message!
+              <mat-chip
+                *ngIf="myForm.get('messageAdd').invalid && myForm.get('messageAdd').dirty || myForm.submitted && myForm.get('messageAdd').invalid"
+                selected="true" color="warn">
+                Please enter a message!
               </mat-chip>
             </mat-chip-list>
           </div>
