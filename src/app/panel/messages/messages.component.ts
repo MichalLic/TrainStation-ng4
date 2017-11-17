@@ -7,9 +7,10 @@ import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/filter';
 
-import {DataStorageService} from '../../data-storage.service';
 import {Station} from '../../station';
 import {Message} from '../../message';
+import {StationService} from './stations/station.service';
+import {MessageService} from './details-messages/message.service';
 
 @Component({
   selector: 'app-messages',
@@ -28,8 +29,6 @@ export class MessagesComponent implements OnInit, OnDestroy {
   messageObject: Message;
   stations: Station[];
   stationObject: Station;
-  newMessage: string;
-  newId: number;
   isUsedId: boolean = false;
   canAddMessage: boolean = false;
   canAddStation: boolean = false;
@@ -38,17 +37,17 @@ export class MessagesComponent implements OnInit, OnDestroy {
   createdMessageTime;
   myForm: FormGroup;
 
-  constructor(private dataStorageService: DataStorageService, private fb: FormBuilder) {
+  constructor(private stationsService: StationService, private messageService: MessageService, private fb: FormBuilder) {
   }
 
   ngOnInit() {
-    this.messagesGetSubscription = this.dataStorageService.getMessages()
+    this.messagesGetSubscription = this.messageService.getMessages()
       .subscribe(data => {
         this.messages = data;
         console.log(this.messages);
       });
 
-    this.stationsGetSubscription = this.dataStorageService.getStations()
+    this.stationsGetSubscription = this.stationsService.getStations()
       .subscribe(data => {
         this.stations = data;
         console.log(this.stations);
@@ -106,7 +105,7 @@ export class MessagesComponent implements OnInit, OnDestroy {
     this.checkId(this.myForm.value.idAdd);
     if (this.myForm.valid && !this.isUsedId) {
       this.messages.push(this.messageObject);
-      this.messagesAddSubscription = this.dataStorageService.addMessage(this.messages, 'hello')
+      this.messagesAddSubscription = this.messageService.addMessage(this.messages)
         .subscribe(
           (response) => console.log(response),
           (error) => console.log(error),
@@ -123,7 +122,7 @@ export class MessagesComponent implements OnInit, OnDestroy {
     this.checkId(this.myForm.value.idAdd);
     if (this.myForm.valid && !this.isUsedId) {
       this.stations.push(this.stationObject);
-      this.stationsAddSubscription = this.dataStorageService.addMessage(this.stations, 'stations')
+      this.stationsAddSubscription = this.stationsService.addMessage(this.stations)
         .subscribe(
           (response) => console.log(response),
           (error) => console.log(error),

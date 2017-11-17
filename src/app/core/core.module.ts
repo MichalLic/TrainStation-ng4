@@ -5,10 +5,11 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule, MatChipsModule, MatFormFieldModule, MatInputModule, MatTableModule} from '@angular/material';
 import {CommonModule} from '@angular/common';
 import {AppRoutingModule} from '../app.routing.module';
-import {DataStorageService} from '../data-storage.service';
 import {AuthService} from '../auth/auth.service';
 import {AuthGuardService} from '../auth/auth-guard.service';
 import {ReactiveFormsModule} from '@angular/forms';
+import {StationService} from '../panel/messages/stations/station.service';
+import {MessageService} from '../panel/messages/details-messages/message.service';
 
 @NgModule({
   declarations: [
@@ -38,9 +39,10 @@ import {ReactiveFormsModule} from '@angular/forms';
     ReactiveFormsModule
   ],
   providers: [
-    DataStorageService,
     AuthService,
-    AuthGuardService
+    AuthGuardService,
+    StationService,
+    MessageService
   ]
 })
 export class CoreModule {

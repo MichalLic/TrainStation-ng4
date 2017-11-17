@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {DataStorageService} from '../../../data-storage.service';
 import {Message} from '../../../message';
+import {MessageService} from './message.service';
 
 @Component({
   selector: 'app-details-messages',
@@ -15,7 +15,7 @@ export class DetailsMessagesComponent implements OnInit {
   canSave: boolean = false;
   createdMessageTime;
 
-  constructor(private dataStorageService: DataStorageService) {
+  constructor(private messageService: MessageService) {
   }
 
   ngOnInit() {
@@ -36,7 +36,7 @@ export class DetailsMessagesComponent implements OnInit {
 
   onSave() {
     this.detail.updated = this.onCreatedTime();
-    this.dataStorageService.editMessages(this.index, this.detail, 'hello')
+    this.messageService.editMessages(this.index, this.detail)
       .subscribe(
         (response) => console.log(response),
         (error) => console.log(error)
@@ -48,7 +48,7 @@ export class DetailsMessagesComponent implements OnInit {
   onRemove() {
     this.messages.splice(this.index, 1);
     console.log(this.messages);
-    this.dataStorageService.removeMessage(this.messages, 'hello')
+    this.messageService.removeMessage(this.messages)
       .subscribe(
         (response) => console.log(response),
         (error) => console.log(error)

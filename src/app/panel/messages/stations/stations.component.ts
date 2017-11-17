@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {DataStorageService} from '../../../data-storage.service';
+
+import {StationService} from './station.service';
 
 @Component({
   selector: 'app-stations',
@@ -14,7 +15,7 @@ export class StationsComponent implements OnInit {
   canSave: boolean = false;
   createdMessageTime;
 
-  constructor(private dataStorageService: DataStorageService) {
+  constructor(private stationsService: StationService) {
   }
 
   ngOnInit() {
@@ -35,7 +36,7 @@ export class StationsComponent implements OnInit {
 
   onSave() {
     this.detail.updated = this.onCreatedTime();
-    this.dataStorageService.editMessages(this.index, this.detail, 'stations')
+    this.stationsService.editMessages(this.index, this.detail)
       .subscribe(
         (response) => console.log(response),
         (error) => console.log(error)
@@ -47,7 +48,7 @@ export class StationsComponent implements OnInit {
   onRemove() {
     this.stations.splice(this.index, 1);
     console.log(this.stations);
-    this.dataStorageService.removeMessage(this.stations, 'stations')
+    this.stationsService.removeMessage(this.stations)
       .subscribe(
         (response) => console.log(response),
         (error) => console.log(error)
