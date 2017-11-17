@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Headers, Http, Response} from '@angular/http';
 
 import 'rxjs/add/operator/map';
@@ -8,25 +8,25 @@ const apiEndpoint = 'https://trainstation-720e3.firebaseio.com/stations';
 
 @Injectable()
 export class StationService {
+  token;
 
-  constructor(private http: Http, private authService: AuthService) { }
+  constructor(private http: Http, private authService: AuthService) {
+    this.token = this.authService.getToken();
+  }
 
   editMessages(id, object) {
-    const token = this.authService.getToken();
     const headers = new Headers({'Content-Type': 'application/json'});
-    return this.http.put(apiEndpoint + '/' + id + '.json' + '?auth=' + token, object, {headers: headers});
+    return this.http.put(apiEndpoint + '/' + id + '.json' + '?auth=' + this.token, object, {headers: headers});
   }
 
   addMessage(object) {
-    const token = this.authService.getToken();
     const headers = new Headers({'Content-Type': 'application/json'});
-    return this.http.put(apiEndpoint + '.json' + '?auth=' + token, object, {headers: headers});
+    return this.http.put(apiEndpoint + '.json' + '?auth=' + this.token, object, {headers: headers});
   }
 
   removeMessage(object) {
-    const token = this.authService.getToken();
     const headers = new Headers({'Content-Type': 'application/json'});
-    return this.http.put(apiEndpoint + '.json' + '?auth=' + token, object, {headers: headers});
+    return this.http.put(apiEndpoint + '.json' + '?auth=' + this.token, object, {headers: headers});
   }
 
   getStations() {
